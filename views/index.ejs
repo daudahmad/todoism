@@ -37,14 +37,25 @@
       <ul class="nav navbar-nav">
         <!-- <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
         <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li> -->
+        <li><a href="#/home">Home</a></li>
+        <li><a href="#/newlist">Add new todo list</a></li>
+        <li><a href="#/deletelist">Delete a todo list</a></li>
+        <li><a href="#/about">About</a></li>
       </ul>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+        <!-- <div class="input-group input-group-sm"> -->
+          <!-- <span class="input-group-addon" id="sizing-addon3">@</span> -->
+          <input type="text" class="form-control" ng-model="queryList" placeholder="Search for lists" size="25"></input>
+          <input type="text" class="form-control" ng-model="queryTodo" placeholder="Search for todos" size="25"></input>
+        </div>
+        <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+      </form>
     </nav>
 
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
-
         <ui-view></ui-view>
-        
       </div>
     </div>
 

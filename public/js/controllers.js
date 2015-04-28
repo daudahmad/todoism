@@ -4,7 +4,7 @@
 
 var TodoListController = angular.module('todolistControllers', []);
 
-TodoListController.controller('TodoListController', ['$scope', function ($scope) {
+TodoListController.controller('TodoListController', ['$scope', '$state', function ($scope, $state) {
 
 	var todoLists = this;
 	$scope.editing = false;
@@ -16,23 +16,13 @@ TodoListController.controller('TodoListController', ['$scope', function ($scope)
 
 	if( localStorage.getItem("todoLists") == null ) {
 		todoLists.lists = [
-			{	listTitle : "Team member 1" , todos : [
+			{	listTitle : "List 1" , todos : [
 					{text:'Sample Task 1', done:false}
 				]
 			},
 			{
-				listTitle : "Team member 2" , todos : [
+				listTitle : "List 2" , todos : [
 					{text:'Sample Task 2', done:false}
-				]
-			},
-			{
-				listTitle : "Team member 3" , todos : [
-					{text:'Sample Task 3', done:false}
-				]
-			},
-			{
-				listTitle : "Team member 4" , todos : [
-					{text:'Sample Task 4', done:false}
 				]
 			}
 		];
@@ -40,6 +30,25 @@ TodoListController.controller('TodoListController', ['$scope', function ($scope)
 	else {
 		todoLists.lists = JSON.parse( localStorage.getItem("todoLists") );
 	}
+
+	$scope.addList = function(){
+		if( !$scope.listTitle || $scope.listTitle === '' ) {
+			alert('Todo list name cannot be empty!');
+		}
+		else {
+			//alert('New todo list: ' + $scope.listTitle + ' added!');
+			todoLists.lists.push(
+				{	
+					listTitle : $scope.listTitle, 
+					todos : [
+						{text:'Sample Task 1', done:false}
+					]
+				}
+			);
+			localStorage.setItem("todoLists", JSON.stringify(todoLists.lists));
+			$state.go('home');
+		}
+	};
 
 	todoLists.addTodo = function(todos) {
 		if( !todos.todoText || todos.todoText === ''
@@ -57,7 +66,14 @@ TodoListController.controller('TodoListController', ['$scope', function ($scope)
 		localStorage.setItem("todoLists", JSON.stringify(todoLists.lists));
 	};
 
-	todoLists.remove = function(todos, parentIndex, index) {
+	todoLists.removeList = function(index) {
+		if (window.confirm("Are you sure?")) { 
+ 			todoLists.lists.splice(index, 1);
+			localStorage.setItem("todoLists", JSON.stringify(todoLists.lists));	
+		}
+	};
+
+	todoLists.removeTodo = function(todos, parentIndex, index) {
 		todos.splice(index, 1);
 		todoLists.lists[parentIndex].todos = todos;
 		localStorage.setItem("todoLists", JSON.stringify(todoLists.lists));

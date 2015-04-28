@@ -21,6 +21,21 @@ todolistApp.config(['$stateProvider', '$urlRouterProvider',
 				    }]
 				}*/
     		})
+        .state('newlist', {
+            url: '/newlist',
+            templateUrl: '/partials/newlist.html',
+            controller: 'TodoListController',
+        })
+        .state('deletelist', {
+            url: '/deletelist',
+            templateUrl: '/partials/deletelist.html',
+            controller: 'TodoListController',
+        })
+        .state('about', {
+            url: '/about',
+            templateUrl: '/partials/about.html',
+            controller: 'TodoListController',
+        })
 		
 		$urlRouterProvider.otherwise('home');
 }]);
