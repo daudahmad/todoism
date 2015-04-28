@@ -1,0 +1,58 @@
+<div class="page-header">
+  <h1>Todo-ism!</h1>
+</div>
+
+<!-- <h3>Add a new note</h3> -->
+<!-- <h2>Todo</h2> -->
+
+<div class="row">
+  <div ng-repeat="todoList in todoLists.lists track by $index">
+  
+    <div class="col-md-5 well">
+      <h4>
+        <span style="cursor: pointer" editable-text="todoList.listTitle" e-placeholder="add todolist name" onaftersave="todoLists.save()">
+          {{todoList.listTitle}}
+        </span>
+        <!-- {{todoList.listTitle}} -->
+      </h4>
+      <span>{{todoLists.remaining(todoList.todos)}} of {{todoList.todos.length}} remaining</span>
+      [<a href="" ng-click="todoLists.archive(todoList.todos, $index)">archive</a>]
+      <ul class="list-unstyled">
+        <li ng-repeat="todo in todoList.todos track by $index">
+          <input type="checkbox" ng-model="todo.done" style="cursor: pointer">
+          <span class="done-{{todo.done}}" style="cursor: pointer" editable-text="todo.text" e-name="edittodotext" e-placeholder="update todo here"
+                  onshow="todoLists.startEditing()" onaftersave="todoLists.save()" oncancel="todoLists.cancelEditing()">
+            {{todo.text}}
+          </span>
+          <!-- <span class="done-{{todo.done}}" ng-hide="editing" ng-click="editing = true">{{todo.text}}</span>
+          <form ng-show="editing" class="form-inline" ng-submit="editing = false; todoLists.save();"> onshow="todoLists.showAlert()"
+            <input type="text" ng-show="editing" class="form-inline" ng-model="todo.text" size="28">
+            <button class="glyphicon glyphicon-ok" type="submit"></button>
+          </form> -->
+          <a href="" ng-hide="editing" ng-click="todoLists.remove(todoList.todos, $parent.$index, $index)">
+            <span class="glyphicon glyphicon-remove pull-right" style="margin-right:20px"></span>
+          </a>
+        </li>
+      </ul>
+      <form ng-submit="todoLists.addTodo(todoList.todos)" class="form-inline">
+        <input type="text" class="form-control" ng-model="todoList.todos.todoText" size="30" placeholder="add new todo here">
+        <input class="btn btn-primary" type="submit" value="add">
+      </form>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-12" ng-show="$odd"></div>
+  </div>
+</div>
+
+<script>
+  /*var editing = false;
+  function setEditingTrue() {
+    alert('In Editing'); 
+    editing = true;
+  }*/
+</script>
+
+<!-- <span valign="top">
+  <button aria-hidden="true" class="close pull-right" style="margin-right:15px;" type="button">x</button>
+</span> -->
+<!-- | filter: { todo.name: 'Daud' } -->
